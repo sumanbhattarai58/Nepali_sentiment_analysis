@@ -1,26 +1,42 @@
---index-url https://download.pytorch.org/whl/cpu
+# -----------------------------
+# Upgrade pip first
+# -----------------------------
+pip>=25.3
+
+# -----------------------------
+# PyTorch (CPU version for Render, Python 3.11)
+# -----------------------------
+-f https://download.pytorch.org/whl/cpu/torch_stable.html
 torch==2.5.1+cpu
 torchvision==0.20.0+cpu
 torchaudio==2.5.1+cpu
 
-# Use compatible versions without strict pinning
-transformers>=4.30.0
-datasets>=2.0.0
-tokenizers>=0.13.0
-safetensors>=0.3.0
+# -----------------------------
+# Hugging Face
+# -----------------------------
+transformers==4.47.1
+datasets==3.2.0
+tokenizers==0.21.0
+safetensors==0.4.5
 
+# -----------------------------
 # ML Libraries
-scikit-learn>=1.0.0
-numpy>=1.21.0
+# -----------------------------
+scikit-learn==1.6.0
+numpy==1.26.4
 
+# -----------------------------
 # Web / API / Deployment
-fastapi>=0.68.0
-uvicorn[standard]>=0.15.0
-python-multipart>=0.0.5
-streamlit>=1.0.0
-requests>=2.25.0
-pillow>=9.0.0
+# -----------------------------
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+streamlit==1.41.1
+requests==2.32.3
+pillow==11.0.0
 
+# -----------------------------
 # Utilities
-pyyaml>=5.0.0
-tqdm>=4.60.0
+# -----------------------------
+pyyaml==6.0.2
+tqdm==4.67.1
