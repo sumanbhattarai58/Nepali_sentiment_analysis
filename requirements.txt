@@ -1,12 +1,10 @@
-pip>=24.0
-
 # -----------------------------
 # PyTorch (CPU version for Render)
 # -----------------------------
--f https://download.pytorch.org/whl/cpu/torch_stable.html
-torch==2.5.1+cpu
-torchvision==0.20.0+cpu
-torchaudio==2.5.1+cpu
+--index-url https://download.pytorch.org/whl/cpu
+torch==2.5.1
+torchvision==0.20.0
+torchaudio==2.5.1
 
 # -----------------------------
 # Hugging Face
@@ -20,7 +18,7 @@ safetensors==0.4.5
 # ML Libraries
 # -----------------------------
 scikit-learn==1.6.0
-numpy==1.26.4
+numpy==1.26.4  # Keep this, but be ready to downgrade if issues
 
 # -----------------------------
 # Web / API / Deployment
