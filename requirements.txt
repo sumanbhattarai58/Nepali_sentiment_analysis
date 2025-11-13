@@ -1,8 +1,10 @@
+pip>=24.0
+
 # -----------------------------
 # PyTorch (CPU version for Render)
 # -----------------------------
 torch==2.5.1
-torchvision==0.20.1
+torchvision==0.20.0
 torchaudio==2.5.1
 
 # -----------------------------
