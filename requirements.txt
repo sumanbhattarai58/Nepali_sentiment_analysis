@@ -1,17 +1,13 @@
-# -----------------------------
-# Upgrade pip first
-# -----------------------------
+# Upgrade pip
 pip>=25.3
 
 # -----------------------------
-
-# PyTorch (CPU version for Render, Python 3.11)
+# PyTorch (CPU, Python 3.11)
 # -----------------------------
 -f https://download.pytorch.org/whl/cpu/torch_stable.html
-torch==2.9.1+cpu
-torchvision==0.15.2+cpu
-torchaudio==2.9.1+cpu
-
+torch==2.10.0
+torchvision==0.15.2
+torchaudio==2.10.0
 
 # -----------------------------
 # Hugging Face
