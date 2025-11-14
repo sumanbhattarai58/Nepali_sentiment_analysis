@@ -207,26 +207,36 @@ sentiment_model: Optional[SentimentModel] = None
 # ============================================
 @app.on_event("startup")
 async def startup_event():
-    """Load model on startup"""
+    """Start model loading in background"""
     global sentiment_model
     print("="*60)
     print("🚀 Starting Nepali Sentiment Analysis API")
     print("="*60)
-    try:
-        sentiment_model = SentimentModel(
-            model_path=config.MODEL_PATH,
-            device=config.DEVICE
-        )
-        print("✅ API is ready to serve predictions!")
-        print("="*60)
-    except Exception as e:
-        print(f"❌ Failed to load model: {e}")
-        raise
+    print("⏳ Model will load in background...")
+    print("="*60)
+    
+    # Load model in background (non-blocking)
+    import asyncio
+    asyncio.create_task(load_model_background())
 
 @app.on_event("shutdown")
 async def shutdown_event():
     """Cleanup on shutdown"""
     print("\n👋 Shutting down API...")
+
+# ADD THIS NEW FUNCTION HERE:
+async def load_model_background():
+    """Load model in background"""
+    global sentiment_model
+    try:
+        sentiment_model = SentimentModel(
+            model_path=config.MODEL_PATH,
+            device=config.DEVICE
+        )
+        print("✅ Model loaded and ready!")
+        print("="*60)
+    except Exception as e:
+        print(f"❌ Failed to load model: {e}")
 
 # ============================================
 # API ENDPOINTS
@@ -235,7 +245,7 @@ async def shutdown_event():
 async def health_check():
     """Check API health status"""
     return {
-        "status": "healthy",
+        "status": "healthy" if sentiment_model is not None else "loading",
         "model_loaded": sentiment_model is not None,
         "device": config.DEVICE,
         "timestamp": datetime.now().isoformat()
@@ -249,7 +259,7 @@ async def predict_sentiment(input_data: TextInput):
     Returns sentiment (Negative/Neutral/Positive) with confidence scores.
     """
     if sentiment_model is None:
-        raise HTTPException(status_code=503, detail="Model not loaded")
+        raise HTTPException(status_code=503, detail="Model is still loading, please wait...")
     
     try:
         result = sentiment_model.predict_single(input_data.text)
