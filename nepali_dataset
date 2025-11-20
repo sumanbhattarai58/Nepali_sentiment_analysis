@@ -1,0 +1,19 @@
+from datasets import load_dataset
+
+# Load the dataset directly from Hugging Face
+dataset = load_dataset("Shushant/NepaliSentiment")
+
+# Check dataset splits
+print(dataset)
+
+# Look at first 5 examples of train set
+for i in range(5):
+    print(dataset['train'][i])
+
+# Load the dataframe from Hugging Face Dataset class
+df = dataset["train"]
+
+print(df)
+
+dataset['train'].to_csv('train.csv', index=False)
+dataset['test'].to_csv('test.csv', index=False)

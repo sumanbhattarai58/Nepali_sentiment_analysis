@@ -7,11 +7,12 @@ Endpoints:
 - POST /predict - Single text prediction
 - POST /predict_batch - Batch predictions
 - GET /health - Health check
-- GET / - API documentation
+- GET /docs - API documentation
 """
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
 from pydantic import BaseModel, Field
 from typing import List, Optional
 import torch
@@ -186,7 +187,7 @@ app = FastAPI(
     title="Nepali Sentiment Analysis API",
     description="Real-time sentiment analysis for Nepali text using BERT",
     version="1.0.0",
-    docs_url="/",
+    docs_url="/docs",  # ✅ FIXED: Changed from "/" to "/docs"
     redoc_url="/redoc"
 )
 
@@ -224,7 +225,6 @@ async def shutdown_event():
     """Cleanup on shutdown"""
     print("\n👋 Shutting down API...")
 
-# ADD THIS NEW FUNCTION HERE:
 async def load_model_background():
     """Load model in background"""
     global sentiment_model
@@ -241,6 +241,11 @@ async def load_model_background():
 # ============================================
 # API ENDPOINTS
 # ============================================
+@app.get("/")
+async def root():
+    """Root endpoint - redirects to API documentation"""
+    return RedirectResponse(url="/docs")
+
 @app.get("/health", response_model=HealthResponse)
 async def health_check():
     """Check API health status"""
